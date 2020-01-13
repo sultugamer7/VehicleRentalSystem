@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head -->
+<head>
+    <!-- Load static for building URLs for static files such as CSS, Images, JS -->
+    {% load static %}
+    <!-- Title -->
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Responsive viewport meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font Awesome for icons - https://use.fontawesome.com/releases/v5.1.0/css/all.css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+        integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'vehicle/styles.css' %}">
+    <!-- Favicon created from - https://favicon.io/emoji-favicons/automobile/ -->
+    <link href="{% static 'vehicle/images/favicon.ico' %}" rel="icon">
+</head>
+
+
+<!-- Body -->
+<body>
+    <!-- Entire page container -->
+    <div id="page-container">
+        <!-- Main content -->
+        <div id="content-wrap">
+            <!-- Navigation bar -->
+            <nav class="navbar navbar-expand-md navbar-light bg-light justify-content-between">
+                <!-- Logo created from - https://www.freelogodesign.org/ -->
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'vehicle/images/logo.png' %}" class="logo" title="Banger & Co. Logo" alt="Logo of Banger & Co's Vehicle Rental System">
+                </a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    {% if user.is_authenticated %}
+                    <ul class="navbar-nav ml-auto mt-0 pr-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/bookings" title="Bookings">Bookings <i
+                                    class="far fa-calendar-check"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/password_change/" title="Change Password">Change
+                                Password <i class="fas fa-key"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout" title="Log out">Log out <i
+                                class="fas fa-sign-out-alt"></i></a>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register" title="Register">Register <i
+                                    class="fas fa-user-edit"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login" title="Log in">Log in <i
+                                    class="fas fa-sign-in-alt"></i></a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </nav>
+
+            <!-- Main container -->
+            <main class="container p-5">
+                <!-- Alert messages -->
+                {% if messages %}
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        {% for message in messages %}
+                        <p class="alert alert-danger {% if message.tags %}alert-{{ message.tags }}{% endif %} popup text-center"
+                            role="alert">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% block main %}{% endblock %}
+            </main>
+
+        </div>
+        <!-- Footer -->
+        <footer id="footer">
+            <label>Developed with ❤️ by Sultan Kazi</label>
+        </footer>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'vehicle/script.js' %}"></script>
+</body>
+
+</html>

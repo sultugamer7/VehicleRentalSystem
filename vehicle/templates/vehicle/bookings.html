@@ -1,0 +1,79 @@
+<!-- Extend base.html file -->
+{% extends "vehicle/base.html" %}
+
+<!-- Title -->
+{% block title %}
+Bookings
+{% endblock%}
+
+<!-- Body -->
+{% block main %}
+<h3 class="bold mb-4 mt-0 pt-0 pl-1 text-left">Your Bookings</h3>
+{% if not bookings %}
+<!-- Display error message if never booked -->
+<div class="jumbotron">
+    <h1>No past bookings!</h1>
+</div>
+{% else %}
+    <!-- Display bookings in recent first order -->
+    {% for booking in bookings %}
+    <div class="jumbotron p-2">
+        <div class="row">
+            <div class="col-lg-5 p-2 pl-4">
+                <!-- Images from: -->
+                <!-- Toyota Yaris - https://www.buyacar.co.uk/cars/economical-cars/hybrid-cars/694/best-small-hybrid-cars -->
+                <!-- Toyota Aygo - https://en.wikipedia.org/wiki/Toyota_Aygo -->
+                <!-- Volkswagen Golf - https://www.autocar.co.uk/car-review/volkswagen/golf -->
+                <!-- Ford Focus - https://www.autocar.co.uk/car-review/ford/focus -->
+                <!-- Toyota Corolla - https://www.buyacar.co.uk/toyota/corolla/corolla-petrol-hatchback/1-2t-vvt-i-icon-tech-5dr-87939/deal-2725091 -->
+                <!-- Ford Mondeo - https://www.autocar.co.uk/car-review/ford/mondeo -->
+                <!-- Vauxhall Vivaro - https://www.buyacar.co.uk/vans/707/best-medium-vans -->
+                <!-- Toyota Proace - https://www.buyacar.co.uk/vans/707/best-medium-vans -->
+                <a href="bookings/booking/{{ booking.id }}">
+                    <img src="/static/{{ booking.vehicle.image }}" class="shadow img-fit"
+                        alt="Image of {{ booking.vehicle.brand }} {{ vehicle.model}}" title="Booking details">
+                </a>
+            </div>
+            <div class=" col-lg-7 pt-2 text-left">
+                <div class="row">
+                    <!-- Vehicle brand & model -->
+                    <div class="col-lg-6">
+                        <h3><a href="bookings/booking/{{ booking.id }}" title="Booking details">
+                                {{ booking.vehicle.brand }} {{ booking.vehicle.model}}
+                            </a></h3>
+                    </div>
+                    <!-- Vehicle type -->
+                    <div class="col-lg-6">
+                        <p class="text-right pr-2">{{ booking.vehicle.vehicle_type.vehicle_type }}</p>
+                    </div>
+                </div>
+                <!-- Booking details -->
+                <p class="pl-3">Pickup: {{ booking.from_time }} on {{ booking.from_date }} </p>
+                <p class="pl-3">Return: {{ booking.to_time }} on {{ booking.to_date }} </p>
+                <p class="pl-3">Hire cost/day: £{{ booking.vehicle.hire_cost }}</p>
+                <hr>
+                <h4 class="pl-3">Total hire cost: £{{ booking.cost }}</h4>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+{% if bookings %}
+<!-- Display pagination if more than 10 bookings -->
+<div class="alert alert-light page">
+    <span class="step-links">
+        {% if bookings.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ bookings.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ bookings.number }} of {{ bookings.paginator.num_pages }}
+        </span>
+        {% if bookings.has_next %}
+        <a href="?page={{ bookings.next_page_number }}">next</a>
+        <a href="?page={{ bookings.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+{% endblock %}

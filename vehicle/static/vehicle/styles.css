@@ -1,0 +1,195 @@
+/* HEADER STYLE */
+.navbar {
+    border-bottom: .1em solid #282828;;
+    background-color: white !important;
+}
+.navbar-brand {
+    padding: 0;
+}
+.logo {
+    width: 10.5rem;
+    height: 4rem;
+    object-fit: cover;
+}
+
+/* FOOTER STYLE */
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: white !important;
+    color: rgb(20, 20, 20);
+    text-align: center;
+    vertical-align: middle;
+    height: 3.5rem;             /* Footer height */
+    border-top: .1em solid #282828;;
+    padding-top: 12px;       
+}
+#footer label {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+
+/* BODY STYLE */
+body {
+    background-color: #d6d4de;
+}
+
+main .form-control
+{
+
+    /* override Bootstrap's 100% width for form controls */
+    width: 100%;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+.container {
+    padding-top: 2rem;
+}
+#page-container {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+#content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
+}
+
+/* Justify paragraphs */
+p {
+    text-align: justify;
+    font-size: 1.1rem;
+}
+
+/* Required star */
+sup {
+    color: red;
+    font-size: 1rem;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    color: rgb(20, 20, 20);
+}
+
+/* Alert */
+@keyframes move {
+    0% {
+        opacity: 1;
+        height: 75%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+    15% {
+        opacity: 1;
+        height: 75%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+    85% {
+        opacity: 1;
+    }
+    94% {
+        opacity: 0;
+        height: 75%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 20px;
+        margin-top: 0px;
+    }
+    100% {
+        opacity: 0;
+        height: 0px;
+        line-height: 0px;
+        padding: 0px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+}
+
+.popup {
+    position: relative;
+    animation-name: move;
+    animation-duration: 6s;
+    animation-fill-mode: forwards;
+    background: white;
+    color: red;
+    font-weight: 600;
+    border: .1em solid red;
+}
+
+
+/* PAGE STYLE */
+.jumbotron {
+    padding: 2em;
+    background: white;
+    border: .1em solid red;
+}
+
+hr {
+    border-top: .1em solid red;
+}
+
+a, a:hover, .nav-link {
+    color: red !important;
+}
+
+.btn-red {
+    color: red;
+    cursor: pointer;
+    background: white;
+}
+
+.font-big {
+    font-size: 1.08rem;
+}
+
+.big-textfield {
+    width: 95%;
+}
+
+.img-fit {
+    height: 14.6rem;
+    width: 100%;
+    object-fit: cover;
+    border: .1rem solid red;
+}
+
+.page {
+    color: red;
+    font-size: 1.1rem;
+    border: .1rem solid red;
+}
+
+.red {
+    color: red;
+    font-weight: 600;
+}
+
+.current {
+    color: blue;
+}

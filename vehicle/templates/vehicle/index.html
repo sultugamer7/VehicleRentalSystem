@@ -1,0 +1,111 @@
+<!-- Extend base.html file -->
+{% extends "vehicle/base.html" %}
+
+<!-- Title block -->
+{% block title %}Home{% endblock %}
+
+<!-- Main block -->
+{% block main %}
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-2"></div>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        <div class="jumbotron">
+            <!-- Booking Form -->
+            <form action="/" method="POST">
+                {% csrf_token %}
+                <h3 class="bold">Booking Form</h3>
+                <hr>
+                <!-- Pickup date & time -->
+                <div class="row">
+                    <div class="col-md-3 text-left pb-2 font-big"><sup>* </sup> Pickup:</div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="form-group big-textfield" title="Please select a pick up date">
+                                <div class="input-group">
+                                    {{ form.from_date }}
+                                    <div class="input-group-append" title="Please select a pick up time">
+                                        {{ form.from_time }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Return date & time -->
+                <div class="row">
+                    <div class="col-md-3 text-left pb-2 font-big"><sup>* </sup> Return:</div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="form-group big-textfield" title="Please select a return date">
+                                <div class="input-group">
+                                    {{ form.to_date }}
+                                    <div class="input-group-append" title="Please select a return time">
+                                        {{ form.to_time }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Search button -->
+                <button type="submit" class="btn btn-danger btn-lg btn-block"
+                    title="Click to search for available vehicles">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="jumbotron pt-3">
+            <h2>About us</h2>
+            <hr>
+            <p>Banger & Co. is a small family owned vehicle hire company. We offer many varieties of vehicles ranging
+                from small town cars to medium sized vans that you can book, but we don't allow customers under 25 years
+                to book anything other than the small town cars. We allow the minimum booking period of 5 hours and a
+                maximum of 2 weeks. No deposit is required to book with us! Just book now and pay on the pickup date.
+                <span class="red">And yes, don't forget to bring a photocard of your driving license, 1 other form of identity from
+                either a recent utility bill (within 3 months) or council tax statement, and the e-mail that you'll
+                get once you book with us, on the pickup date.</span></p>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="jumbotron pt-3">
+            <h2>How to book with us</h2>
+            <hr>
+            <ol class="text-left">
+                <li><p class="m-0">Select a booking time period.</p></li>
+                <li><p class="m-0">Select a vehicle from the list of serch results.</p></li>
+                <li><p class="m-0">Confirm your booking and click on Book button.</p></li>
+            </ol>
+            <label class="red text-left">
+                NOTE: You cannot book more than one vehicle for the same time period or even for a part of that time
+                period.
+            </label>
+            <hr>
+            <h3>Cancel or extend return time</h3>
+            <hr>
+            <ol class="text-left">
+                <li><p class="m-0">Go to bookings.</p></li>
+                <li><p class="m-0">Select a booking.</p></li>
+                <ul>
+                    <li><p class="m-0">Cancel booking:</p></li>
+                    <ul>
+                        <li><p class="m-0">Cancel booking if available to cancel.</p></li>
+                    </ul>
+                    <li><p class="m-0">Extend Return Time:</p></li>
+                    <ul>
+                        <li><p class="m-0">Extend return time if available to extend.</p></li>
+                    </ul>
+                </ul>
+            </ol>
+            <label class="red text-left">
+                NOTE 1: You cannot cancel the booking on the pickup date or after the pickup date.
+            </label>
+            <label class="red text-left">
+                NOTE 2: You cannot extend the return time if that vehicle is already booked on the same day by someone
+                else one hour after your return time.
+            </label>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+<!-- Extend base.html file -->
+{% extends "vehicle/base.html" %}
+
+<!-- Title -->
+{% block title %}
+Vehicle Details
+{% endblock%}
+
+<!-- Body -->
+{% block main %}
+<h3 class="bold mb-4 mt-0 pt-0 pl-1 text-left">Vehicle Details</h3>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="jumbotron p-4">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Images from: -->
+                    <!-- Toyota Yaris - https://www.buyacar.co.uk/cars/economical-cars/hybrid-cars/694/best-small-hybrid-cars -->
+                    <!-- Toyota Aygo - https://en.wikipedia.org/wiki/Toyota_Aygo -->
+                    <!-- Volkswagen Golf - https://www.autocar.co.uk/car-review/volkswagen/golf -->
+                    <!-- Ford Focus - https://www.autocar.co.uk/car-review/ford/focus -->
+                    <!-- Toyota Corolla - https://www.buyacar.co.uk/toyota/corolla/corolla-petrol-hatchback/1-2t-vvt-i-icon-tech-5dr-87939/deal-2725091 -->
+                    <!-- Ford Mondeo - https://www.autocar.co.uk/car-review/ford/mondeo -->
+                    <!-- Vauxhall Vivaro - https://www.buyacar.co.uk/vans/707/best-medium-vans -->
+                    <!-- Toyota Proace - https://www.buyacar.co.uk/vans/707/best-medium-vans -->
+                    <a href="/vehicle/{{ vehicle.brand }}/{{ vehicle.model}}">
+                        <img src="/static/{{ vehicle.image }}" class="shadow img-fit"
+                            alt="Image of {{ vehicle.brand }} {{ vehicle.model}}"
+                            title="{{ vehicle.brand }} {{ vehicle.model}} details">
+                    </a>
+                </div>
+                <div class=" col-lg-6 text-left">
+                    <!-- Vehicle brand & model -->
+                    <h3><a href="/vehicle/{{ vehicle.brand }}/{{ vehicle.model}}"
+                            title="{{ vehicle.brand }} {{ vehicle.model}} details">
+                            {{ vehicle.brand }} {{ vehicle.model}}
+                        </a></h3>
+                    <!-- Other vehicle details -->
+                    <p class="text-left pl-2">Vehicle Type: {{ vehicle.vehicle_type.vehicle_type }}</p>
+                    <p class="text-left pl-2">Fuel Type: {{ vehicle.fuel_type }}</p>
+                    <p class="text-left pl-2">Gear Type: {{ vehicle.gear_type }}</p>
+                    <p class="text-left pl-2">Hire cost/day: £{{ vehicle.hire_cost }}</p>
+                </div>
+            </div>
+            <hr>
+            <!-- Vehicle description -->
+            <div class="row text-left">
+                <div class="col-lg-12 pl-3">
+                    <h4>Vehicle Description:</h4>
+                    <p>{{ vehicle.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Booking details -->
+                    <h4>Booking Details:</h4>
+                    <p class="text-center">Pickup: {{ from_time }} {%if from_time > 12 %}PM{%else%}AM{%endif%} on {{ from_date }}</p>
+                    <p class="text-center">Return: {{ to_time }} {%if to_time > 12 %}PM{%else%}AM{%endif%} on {{ to_date }}</p>
+                    <p class="red text-center">Total hire cost: £{{ vehicle.total_cost }}</p>
+                    <!-- Booking form -->
+                    <form action="/book" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="brand" id="brand" value="{{ vehicle.brand }}">
+                        <input type="hidden" name="model" id="model" value="{{ vehicle.model }}">
+                        <!-- Booking modal button -->
+                        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal"
+                            data-target="#bookModal" title="Book?">Book Now</button>
+                        <!-- Booking modal -->
+                        <div class="modal fade" id="bookModal" tabindex="-1" role="dialog"
+                            aria-labelledby="bookModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <!-- Modal title -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="bookModalLabel">Booking Confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <!-- Booking info -->
+                                        <p>Vehicle: <span class="red"> {{ vehicle.brand }} {{ vehicle.model }} </span>
+                                        </p>
+                                        <p>Pickup: <span class="red">{{ from_time }} {%if from_time > 12 %}PM{%else%}AM{%endif%} on {{ from_date }} </span></p>
+                                        <p>Return: <span class="red">{{ to_time }} {%if to_time > 12 %}PM{%else%}AM{%endif%} on {{ to_date }}</span></p>
+                                        <p>Total Cost: <span class="red">£{{ vehicle.total_cost }}</span></p>
+                                        <p>You'll need to bring a photocard of your driving license, 1 other form of identity from
+                                            either a recent utility bill (within 3 months) or council tax statement, and the e-mail that you'll
+                                            receive once you book with us, on the pickup date.</p>
+                                        <p class="red">Are you sure you want to book?</p>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-lg"
+                                            data-dismiss="modal" title="No">No</button>
+                                        <button type="submit" class="btn btn-danger btn-lg" title="Confirm booking">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

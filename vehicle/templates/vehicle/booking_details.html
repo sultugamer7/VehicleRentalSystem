@@ -1,0 +1,171 @@
+<!-- Extend base.html file -->
+{% extends "vehicle/base.html" %}
+
+<!-- Title -->
+{% block title %}
+Bookings
+{% endblock%}
+
+<!-- Body -->
+{% block main %}
+<h3 class="bold mb-4 mt-0 pt-0 pl-1 text-left">Booking Details</h3>
+<div class="jumbotron p-2">
+    <div class="row">
+        <div class="col-lg-5 p-2 pl-4">
+            <!-- Images from: -->
+            <!-- Toyota Yaris - https://www.buyacar.co.uk/cars/economical-cars/hybrid-cars/694/best-small-hybrid-cars -->
+            <!-- Toyota Aygo - https://en.wikipedia.org/wiki/Toyota_Aygo -->
+            <!-- Volkswagen Golf - https://www.autocar.co.uk/car-review/volkswagen/golf -->
+            <!-- Ford Focus - https://www.autocar.co.uk/car-review/ford/focus -->
+            <!-- Toyota Corolla - https://www.buyacar.co.uk/toyota/corolla/corolla-petrol-hatchback/1-2t-vvt-i-icon-tech-5dr-87939/deal-2725091 -->
+            <!-- Ford Mondeo - https://www.autocar.co.uk/car-review/ford/mondeo -->
+            <!-- Vauxhall Vivaro - https://www.buyacar.co.uk/vans/707/best-medium-vans -->
+            <!-- Toyota Proace - https://www.buyacar.co.uk/vans/707/best-medium-vans -->
+            <a href="/bookings/booking/{{ booking.id }}">
+                <img src="/static/{{ booking.vehicle.image }}" class="shadow img-fit"
+                    alt="Image of {{ booking.vehicle.brand }} {{ vehicle.model}}" title="Booking details">
+            </a>
+        </div>
+        <div class=" col-lg-7 pt-2 text-left">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Vehicle brand & model -->
+                    <h3><a href="/bookings/booking/{{ booking.id }}" title="Booking details">
+                            {{ booking.vehicle.brand }} {{ booking.vehicle.model}}
+                        </a></h3>
+                    <!-- Other vehicle info -->
+                    <p class="text-left pl-2">Vehicle Type: {{ booking.vehicle.vehicle_type.vehicle_type }}</p>
+                    <p class="text-left pl-2">Fuel Type: {{ booking.vehicle.fuel_type }}</p>
+                    <p class="text-left pl-2">Gear Type: {{ booking.vehicle.gear_type }}</p>
+                    <p class="text-left pl-2">Hire cost/day: £{{ booking.vehicle.hire_cost }}</p>
+                </div>
+                <!-- Booking details -->
+                <div class="col-lg-6">
+                    <h4>Booking Details:</h4>
+                    <p class="text-left">Pickup: {{ booking.from_time }} on {{ booking.from_date }}</p>
+                    <p class="text-left">Return: {{ booking.to_time }} on {{ booking.to_date }}</p>
+                    <p class="text-left red">Total hire cost: £{{ booking.cost }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+            <h3 class="mb-4">Extend Return Time</h3>
+            {% if times %}
+            <!-- Extend return time form -->
+            <form action="/extend" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="booking_id" id="booking_id" value="{{ booking.id }}">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <div class="form-group big-textfield">
+                            <div class="input-group">
+                                <!-- Time select -->
+                                <select class="form-control" name="time" id="time" title="Please select a return time" required>
+                                    {% for time in times %}
+                                    <option value="{{ time }}">{{ time }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="input-group-append" title="Extend vehicle return time">
+                                    <!-- Extend return time modal button -->
+                                    <button type=button class="btn btn-danger btn-block" data-toggle="modal"
+                                        data-target="#extendModal" title="Extend return time?">Extend</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Extend return time modal -->
+                        <div class="modal fade" id="extendModal" tabindex="-1" role="dialog"
+                            aria-labelledby="extendModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="extendModalLabel">Extend Return Time Confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to extend the return time?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" title="No">No</button>
+                                        <button type="submit" class="btn btn-danger btn-lg" title="Confirm">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+            <!-- Display error message if not available to extend return time -->
+            <p class="pl-2 m-0">You cannot extend return time because of one of the following reasons:</p>
+            <p class="pl-4 m-0">1. The booking is of past.</p>
+            <p class="pl-4 m-0">2. This vehicle is already booked after your return time.</p>
+            <p class="pl-4 m-0">3. Current return time is the max return time.</p>
+            {% endif %}
+        </div>
+        <div class="col-lg-6">
+            <h3 class="mb-4">Cancel Booking</h3>
+            {% if eligible == True %}
+                <!-- Cancel booking form -->
+                <form action="/cancel_booking" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="booking_id" id="booking_id" value="{{ booking.id }}">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <div class="input-group">
+                                <!-- Password -->
+                                <input type="password" name="password" id="password" placeholder="Password"
+                                    class="form-control" required title="Please enter your password">
+                                <div class="input-group-append" title="Cancel your booking">
+                                    <!-- Cancel booking modal button -->
+                                    <button type=button class="btn btn-danger" data-toggle="modal"
+                                        data-target="#cancelModal" title="Cancel booking?">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Cancel booking modal -->
+                    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog"
+                        aria-labelledby="cancelModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="cancelModalLabel">Cancel Booking Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to cancel this booking?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" title="No">No</button>
+                                    <button type="submit" class="btn btn-danger btn-lg" title="Confirm">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+            <!-- Display error message if not elligible to cancel booking -->
+            <p class="pr-2">You cannot cancel the bookings of the past or on the day of the pickup date!</p>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div class="row text-left pl-2">
+        <!-- Vehicle description -->
+        <div class="col-lg-12">
+            <h4>Vehicle Desciption:</h4>
+            <p>{{ booking.vehicle.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!-- Extend base.html file -->
+{% extends "vehicle/base.html" %}
+
+<!-- Title -->
+{% block title %}
+Log in
+{% endblock%}
+
+<!-- Body -->
+{% block main %}
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-2"></div>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        <div class="jumbotron">
+            <!-- Login Form -->
+            <form action="login" method="POST">
+                {% csrf_token %}
+                <h3 class="bold">Log in</h3>
+                <hr>
+                <!-- Username -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> Username:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your username">
+                            {{ form.username }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Password -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> Password:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your password">
+                            <div class="input-group">
+                                {{ form.password }}
+                                <div class="input-group-append">
+                                    <span onclick="show_hide('password', 'fa');" class="input-group-text btn-red" title="Show / hide password"><i
+                                            class="fa fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Log In button -->
+                <button type="submit" class="btn btn-danger btn-lg btn-block" title="Click to log in to Banger & Co.">Log in</button>
+            </form>
+            <hr>
+            <p class="text-center">
+                <a href="password_reset/" title="Reset password">Forgot Password?</a>
+            </p>
+            <!-- Link to register page -->
+            <p class="text-center">New user?
+                <a href="/register" title="Go to Register page">Register now</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+<!-- Extend base.html file -->
+{% extends "vehicle/base.html" %}
+
+<!-- Title -->
+{% block title %}
+Register
+{% endblock%}
+
+<!-- Body -->
+{% block main %}
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-2"></div>
+    <div class="col-lg-6 col-md-6 col-sm-8">
+        <div class="jumbotron">
+            <!-- Register Form -->
+            <form action="register" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <h3 class="bold">Register</h3>
+                <hr>
+                <!-- First Name -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> First Name:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your first name">
+                            {{ form.first_name }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Last Name -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> Last Name:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your last name">
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Email -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> E-Mail:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your e-mail address">
+                            {{ form.email }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Birth Date -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> Birth Date:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your birth date">
+                            {{ form.birth }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Username -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> Username:</div>
+                    <div class="col-md-8">
+                        <div class="form-group" title="Please enter your username">
+                            {{ form.username }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Password -->
+                <div class="row">
+                    <div class="col-md-4 text-left pb-2 font-big"><sup>* </sup> Password:</div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <div class="input-group" title="Please enter your password">
+                                {{ form.password }}
+                                <div class="input-group-append">
+                                    <span onclick="show_hide('password', 'fa');" class="input-group-text btn-red" title="Show / hide password"><i
+                                            class="fa fa-eye"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Register button -->
+                <button type="submit" class="btn btn-danger btn-lg btn-block" title="Click to register with Banger & Co.">Register</button>
+            </form>
+            <hr>
+            <!-- Link to login page -->
+            <p class='text-center'>Already have an account?
+                <a href="/login" title="Go to Login page">Log in</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
